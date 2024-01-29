@@ -34,5 +34,6 @@ public class Ship : MonoBehaviour
     {
         //this is unfinshed
         transform.Translate(transform.forward + WindManager.instance.Wind);
+        //Comment from GANON
     }
 }
