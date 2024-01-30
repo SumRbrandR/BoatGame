@@ -1,13 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class WindManager
+public class WindManager : MonoBehaviour
 {
-    public static WindManager instance = new WindManager();
-    Vector3 direction;
-    float speed;
+    
+    [SerializeField]
+    public Vector3 direction;
+    [SerializeField]
+    public float speed;
+    [SerializeField]
+    public float windAngle;
 
-    public Vector3 Wind;// = direction * speed;
+
+    private void Update()
+    {
+        Debug.DrawRay(transform.position, Wind());
+    }
+
+    public Vector3 Wind()
+    {
+        transform.rotation = Quaternion.AngleAxis(windAngle, Vector3.up);
+        return transform.forward * speed;
+    }
 }
