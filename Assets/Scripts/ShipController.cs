@@ -14,6 +14,7 @@ public class ShipController : MonoBehaviour
         playerInput = new();
         playerInput.Helm.Enable();
         playerInput.Helm.SailAmount.performed += Sail;
+        playerInput.Helm.Anchor.performed += Anchor;
 
     }
     private void Update()
@@ -28,6 +29,10 @@ public class ShipController : MonoBehaviour
         float amount = 0.25f * playerInput.Helm.SailAmount.ReadValue<float>();
         //amount = Mathf.Clamp(amount,0,1);
         ship.SetSail(amount) ;
+    }
+    void Anchor(InputAction.CallbackContext context)
+    {
+        ship.ToggleAnchor();
     }
     
 }

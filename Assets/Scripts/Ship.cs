@@ -18,8 +18,8 @@ public class Ship : MonoBehaviour
     public float sailDamage;
     WindManager windManager;
     public float windSlower = 0.01f;
-
     public float angle;
+    public bool anchor = false;
 
     private void Start()
     {
@@ -39,19 +39,18 @@ public class Ship : MonoBehaviour
     {
         transform.Rotate(inputVector);
     }
+        public float speedMultiplier;
     public void ReactToWind()
     {
-
         Vector3 forward = transform.forward;
         angle = Vector3.SignedAngle(forward, windManager.Wind(), Vector3.up) ;
-        float speedMultiplier;
 
-        speedMultiplier = Mathf.Abs((1f/4f)*angle); // y=mx+b
+        speedMultiplier = 1-( Mathf.Abs(angle)/180f); // y=mx+b
 
 
-        
 
-        transform.position += (windManager.Wind() * windSlower) + forward * sailAmount * shipSpeed * speedMultiplier * Time.deltaTime;
+        if(!anchor)
+            transform.position += (windManager.Wind() * windSlower) + forward * sailAmount * shipSpeed * speedMultiplier * Time.deltaTime ;
     }
     public void SetSail(float amount)
     {
@@ -59,5 +58,10 @@ public class Ship : MonoBehaviour
         sailAmount = Mathf.Clamp(sailAmount, 0, 1);
     }
 
+    public void ToggleAnchor()
+    {
+        anchor = !anchor;
+
+    }
 
 }

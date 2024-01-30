@@ -71,6 +71,15 @@ public partial class @PlayerShipControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Anchor"",
+                    ""type"": ""Button"",
+                    ""id"": ""3251a48e-3d17-48f5-959c-0c2ca4a51a6b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -205,6 +214,17 @@ public partial class @PlayerShipControls: IInputActionCollection2, IDisposable
                     ""action"": ""Change Ammo Type"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6ecc2745-e707-4d2e-b042-1290ecffd592"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Anchor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -218,6 +238,7 @@ public partial class @PlayerShipControls: IInputActionCollection2, IDisposable
         m_Helm_Fire = m_Helm.FindAction("Fire", throwIfNotFound: true);
         m_Helm_ToggleMannedSide = m_Helm.FindAction("Toggle Manned Side", throwIfNotFound: true);
         m_Helm_ChangeAmmoType = m_Helm.FindAction("Change Ammo Type", throwIfNotFound: true);
+        m_Helm_Anchor = m_Helm.FindAction("Anchor", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -284,6 +305,7 @@ public partial class @PlayerShipControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Helm_Fire;
     private readonly InputAction m_Helm_ToggleMannedSide;
     private readonly InputAction m_Helm_ChangeAmmoType;
+    private readonly InputAction m_Helm_Anchor;
     public struct HelmActions
     {
         private @PlayerShipControls m_Wrapper;
@@ -293,6 +315,7 @@ public partial class @PlayerShipControls: IInputActionCollection2, IDisposable
         public InputAction @Fire => m_Wrapper.m_Helm_Fire;
         public InputAction @ToggleMannedSide => m_Wrapper.m_Helm_ToggleMannedSide;
         public InputAction @ChangeAmmoType => m_Wrapper.m_Helm_ChangeAmmoType;
+        public InputAction @Anchor => m_Wrapper.m_Helm_Anchor;
         public InputActionMap Get() { return m_Wrapper.m_Helm; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -317,6 +340,9 @@ public partial class @PlayerShipControls: IInputActionCollection2, IDisposable
             @ChangeAmmoType.started += instance.OnChangeAmmoType;
             @ChangeAmmoType.performed += instance.OnChangeAmmoType;
             @ChangeAmmoType.canceled += instance.OnChangeAmmoType;
+            @Anchor.started += instance.OnAnchor;
+            @Anchor.performed += instance.OnAnchor;
+            @Anchor.canceled += instance.OnAnchor;
         }
 
         private void UnregisterCallbacks(IHelmActions instance)
@@ -336,6 +362,9 @@ public partial class @PlayerShipControls: IInputActionCollection2, IDisposable
             @ChangeAmmoType.started -= instance.OnChangeAmmoType;
             @ChangeAmmoType.performed -= instance.OnChangeAmmoType;
             @ChangeAmmoType.canceled -= instance.OnChangeAmmoType;
+            @Anchor.started -= instance.OnAnchor;
+            @Anchor.performed -= instance.OnAnchor;
+            @Anchor.canceled -= instance.OnAnchor;
         }
 
         public void RemoveCallbacks(IHelmActions instance)
@@ -360,5 +389,6 @@ public partial class @PlayerShipControls: IInputActionCollection2, IDisposable
         void OnFire(InputAction.CallbackContext context);
         void OnToggleMannedSide(InputAction.CallbackContext context);
         void OnChangeAmmoType(InputAction.CallbackContext context);
+        void OnAnchor(InputAction.CallbackContext context);
     }
 }
